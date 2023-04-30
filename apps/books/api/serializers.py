@@ -26,8 +26,8 @@ class BookTitleUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ("title",)
-        read_only_fields = ("id", "author", "description", "ratings")
+        fields = ("title", "ratings")
+        read_only_fields = ("id", "author", "description")
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
