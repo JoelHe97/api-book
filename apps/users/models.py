@@ -14,7 +14,7 @@ class CustomUser(models.Model):
     )
 
     age = models.CharField(
-        max_length=2, null=True, blank=True, verbose_name=_("User biological age")
+        max_length=200, null=True, blank=True, verbose_name=_("User biological age")
     )
 
     def __str__(self):

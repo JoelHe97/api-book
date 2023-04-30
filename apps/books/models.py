@@ -11,20 +11,18 @@ from django.utils.translation import gettext as _
 class Book(models.Model):
     id = models.CharField(primary_key=True, unique=True, verbose_name=_("Book id"))
     title = models.CharField(
-        max_length=200, null=False, blank=False, verbose_name=_("Title of the book")
+        max_length=300, null=False, blank=False, verbose_name=_("Title of the book")
     )
 
     author = models.CharField(
         max_length=200, null=True, blank=True, verbose_name=_("Author of the book")
     )
-    year_publication = models.CharField(
-        max_length=4,
+    year_publication = models.TextField(
         null=True,
         blank=True,
         verbose_name=_("Year of publication"),
     )
-    publisher = models.CharField(
-        max_length=100, null=True, blank=True, verbose_name=_("Publisher name")
+    publisher = models.TextField(null=True, blank=True, verbose_name=_("Publisher name")
     )
     image_1 = models.URLField( null=True, blank=True, verbose_name=_("Book image 1"))
     image_2 = models.URLField( null=True, blank=True, verbose_name=_("Book image 2"))
