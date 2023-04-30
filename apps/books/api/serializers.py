@@ -4,7 +4,7 @@ from apps.books.rating.api.serializers import RatingSerializer
 
 class BookSerializer(serializers.ModelSerializer):
     # Adjunta el rating de libros
-    ratings = RatingSerializer(many=True, read_only=True, source='ratings_set')
+    ratings = RatingSerializer(many=True, read_only=True, source='rating_set')
 
     class Meta:
         model = Book
