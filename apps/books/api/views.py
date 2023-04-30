@@ -1,11 +1,11 @@
 from rest_framework import generics
 from ..models import Book
-from .serializers import BookSerializer, BookTitleUpdateSerializer
+from .serializers import BookSerializer, BookTitleUpdateSerializer, BookDetailSerializer
 from utils.pagination import CustomPagination
 
 
 class BookList(generics.ListCreateAPIView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.order_by("title")
     serializer_class = BookSerializer
     pagination_class = CustomPagination
 
@@ -28,6 +28,8 @@ class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
 
     def get_serializer_class(self):
+        if self.request.method == "GET":
+            return BookDetailSerializer
         # Utiliza el serializer personalizado solo cuando sea un metodo PUT
         if self.request.method == "PUT":
             return BookTitleUpdateSerializer
