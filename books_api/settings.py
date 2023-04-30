@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -46,7 +48,27 @@ THIRD_PARTY_APPS = [
 ]
 # Aplicaciones locales que se creó
 LOCAL_APPS = ["apps.books", "apps.users", "apps.core"]
-CORS_ORIGIN_WHITELIST = ("http://localhost:8000",)
+
+
+def get_CORS_ALLOWED_ORIGIN():
+    CORS_ALLOWED_ORIGIN_FROM_ENVIRON = os.environ.get("CORS_ALLOWED_ORIGIN")
+    return [s.strip() for s in CORS_ALLOWED_ORIGIN_FROM_ENVIRON.split(",")]
+
+
+def get_CORS_ORIGIN_WHITELIST():
+    CORS_ORIGIN_WHITELIST_FROM_ENVIRON = os.environ.get("CORS_ORIGIN_WHITELISTS")
+    return [s.strip() for s in CORS_ORIGIN_WHITELIST_FROM_ENVIRON.split(",")]
+
+
+def get_CSRF_TRUSTED_ORIGINS():
+    CSRF_TRUSTED_ORIGINS_FROM_ENVIRON = os.environ.get("CSRF_TRUSTED_ORIGINS")
+    return [s.strip() for s in CSRF_TRUSTED_ORIGINS_FROM_ENVIRON.split(",")]
+
+
+CORS_ALLOWED_ORIGINS = get_CORS_ALLOWED_ORIGIN()
+CORS_ORIGIN_WHITELIST = get_CORS_ORIGIN_WHITELIST()
+CSRF_TRUSTED_ORIGINS = get_CSRF_TRUSTED_ORIGINS()
+
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
@@ -88,7 +110,7 @@ DATABASES = {
         "ENGINE": os.environ.get("DB_ENGINE"),
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
-        "PASSWORD":os.environ.get("DB_PASSWORD"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
     }
